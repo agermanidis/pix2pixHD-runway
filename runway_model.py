@@ -67,13 +67,13 @@ def generate(model, inputs):
     transform_label = get_transform(
         opt, params, method=Image.NEAREST, normalize=False
     )
-    label_tensor = transform_label(label) * 255.0
+    label_tensor = transform_label(label)
     inst_tensor = transform_label(label)
     label_tensor = label_tensor.unsqueeze(0)
     inst_tensor = inst_tensor.unsqueeze(0)
     generated = model.inference(label_tensor, inst_tensor)
     im = util.tensor2im(generated.data[0])
-    return im
+    return Image.fromarray(im)
 
 
 if __name__ == '__main__':
